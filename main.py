@@ -15,17 +15,17 @@ password = ""
 
 def generatePassword(password):  # Function that generates the password, picking randomly from each array
     allLists = AlphabetCap + AlphabetLower + Symbols + Numbers
-    password += "".join(secrets.choice(allLists))
+    for x in range(PassLength): # Pick a Random Character for Length of Password
+        password += "".join(secrets.choice(allLists))
     return password
 
 
 while True:
     PassLength = int(input("Enter Password Length: "))  # Determines how long the password will be
 
-    for x in range(PassLength):
-        password = generatePassword(password)
+    password = generatePassword(password)
+    print(password) # Displays Password in Console
 
-    print(password)
     answer = input("Would you like to copy password to clipboard Y or N: ")
     if answer in ("Y", "y"):
         pyperclip.copy(password)  # Copies password to clipboard
@@ -37,3 +37,4 @@ while True:
             break
         else:
             continue
+            
