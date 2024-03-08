@@ -1,4 +1,3 @@
-import random
 import secrets
 import pyperclip
 
@@ -12,19 +11,11 @@ Numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 Symbols = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "=", "+", "'", ",", ".", "/", "?", "<", ">", "|", "[",
            "]", "{", "}", "`", "~"]
 password = ""
-numRange = [1, 2, 3, 0]
 
 
 def generatePassword(password):  # Function that generates the password, picking randomly from each array
-    randNum = secrets.choice(numRange)
-    if randNum == 0:
-        password += "".join(secrets.choice(AlphabetCap))
-    elif randNum == 1:
-        password += "".join(secrets.choice(AlphabetLower))
-    elif randNum == 2:
-        password += "".join(secrets.choice(Numbers))
-    else:
-        password += "".join(secrets.choice(Symbols))
+    allLists = AlphabetCap + AlphabetLower + Symbols + Numbers
+    password += "".join(secrets.choice(allLists))
     return password
 
 
