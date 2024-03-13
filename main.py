@@ -13,11 +13,12 @@ Symbols = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "=", "+", "'",
 password = ""
 
 
-def generatePassword(password):  # Function that generates the password, picking randomly from each array
+def generatePassword(localpassword):  # Function that generates the password, picking randomly from each array
     allLists = AlphabetCap + AlphabetLower + Symbols + Numbers
+    password = localpassword
     for x in range(PassLength): # Pick a Random Character for Length of Password
-        password += "".join(secrets.choice(allLists))
-    return password
+        localpassword += "".join(secrets.choice(allLists))
+    return localpassword
 
 
 while True:
@@ -36,5 +37,6 @@ while True:
             print("Exit")
             break
         else:
+            password = ""
             continue
             
