@@ -1,5 +1,6 @@
 import PySimpleGUI as SG
 import secrets
+import pyperclip
 
 AlphabetCap = [
     "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W",
@@ -12,7 +13,13 @@ Symbols = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "=", "+", "'",
            "]", "{", "}", "`", "~"]
 password = ""
 
-layout = [[SG.Text("Input Password Length")], [SG.InputText(key='-INPUT-')], [SG.Button("Generate")], [SG.Text(password, key='-PASSWORD-')]]
+layout = [
+    [SG.Text("Input Password Length")],
+    [SG.InputText(key='-INPUT-')],
+    [SG.Button("Generate")],
+    [SG.Text(password, key='-PASSWORD-')],
+    [SG.Button("Copy Password")],
+]
 window = SG.Window("PassGen", layout)
 
 
@@ -27,9 +34,14 @@ while True:
     event, values = window.read()
     if event == SG.WIN_CLOSED:
         break
-    elif event == "Generate":
+    if event == "Generate":
+        password = ""
         PassLength = int(values['-INPUT-'])
         password = generatePassword(password)
         window['-PASSWORD-'].update(password)
+        continue
+    if event == "Copy Password":
+        SG.clipboard_set(password)
+        SG.Popup("Password Copied to Clipboard")
         continue
     window.close()
