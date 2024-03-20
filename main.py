@@ -1,5 +1,5 @@
+import PySimpleGUI as SG
 import secrets
-import pyperclip
 
 AlphabetCap = [
     "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W",
@@ -12,31 +12,24 @@ Symbols = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "=", "+", "'",
            "]", "{", "}", "`", "~"]
 password = ""
 
+layout = [[SG.Text("Input Password Length")], [SG.InputText(key='-INPUT-')], [SG.Button("Generate")], [SG.Text(password, key='-PASSWORD-')]]
+window = SG.Window("PassGen", layout)
 
-def generatePassword(localpassword):  # Function that generates the password, picking randomly from each array
+
+def generatePassword(password):  # Function that generates the password, picking randomly from each array
     allLists = AlphabetCap + AlphabetLower + Symbols + Numbers
-    password = localpassword
-    for x in range(PassLength): # Pick a Random Character for Length of Password
-        localpassword += "".join(secrets.choice(allLists))
-    return localpassword
+    for x in range(PassLength):  # Pick a Random Character for Length of Password
+        password += "".join(secrets.choice(allLists))
+    return password
 
 
 while True:
-    PassLength = int(input("Enter Password Length: "))  # Determines how long the password will be
-
-    password = generatePassword(password)
-    print(password) # Displays Password in Console
-
-    answer = input("Would you like to copy password to clipboard Y or N: ")
-    if answer in ("Y", "y"):
-        pyperclip.copy(password)  # Copies password to clipboard
-        print(password, " Has been copied to clipboard")
-    elif answer in ("N", "n"):
-        answer = input("N to Exit or Y to regenerate password: ")
-        if answer in ("N", "n"):
-            print("Exit")
-            break
-        else:
-            password = ""
-            continue
-            
+    event, values = window.read()
+    if event == SG.WIN_CLOSED:
+        break
+    elif event == "Generate":
+        PassLength = int(values['-INPUT-'])
+        password = generatePassword(password)
+        window['-PASSWORD-'].update(password)
+        continue
+    window.close()
