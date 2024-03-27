@@ -41,7 +41,10 @@ while True:
         window['-PASSWORD-'].update(password)
         continue
     if event == "Copy Password":
-        SG.clipboard_set(password)
-        SG.Popup("Password Copied to Clipboard")
+        if password == "":
+            SG.popup("Make sure to Generate password first")
+        else:
+            SG.clipboard_set(password)
+            SG.Popup("Password Copied to Clipboard")
         continue
     window.close()
